@@ -42,6 +42,11 @@ struct record {
   char *line;
 };
 
+struct indexed_record
+{
+  int64_t osm_id;
+  const struct record *record;
+};
 // Read an OpenStreetMap place names dataset from a given file.  On
 // success, returns a pointer to the array of records read, and sets
 // *n to the number of records.  Returns NULL on failure.
