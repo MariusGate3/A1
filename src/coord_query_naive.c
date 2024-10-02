@@ -15,7 +15,7 @@ struct naive_data {
   int n;
 };
 
-int64_t eucldist(double lon, double lat, double lon_dest, double lat_dest) {
+int64_t eucldist(double lon, double lon_dest, double lat, double lat_dest) {
   return sqrt(((lon-lon_dest) * (lon-lon_dest)) + ((lat-lat_dest) * (lat-lat_dest)));
 }
 
@@ -35,12 +35,10 @@ const struct record* lookup_naive(struct naive_data *data, double lon, double la
   int64_t current_record = 0;
   int64_t closest_record = 0;
   int64_t min_distance = eucldist(data->rs[closest_record].lon, lon, data->rs[closest_record].lat, lat);
-  
+
   while(current_record < data->n) {
     int64_t current_distance = eucldist(data->rs[current_record].lon, lon, data->rs[current_record].lat,lat);
-    printf("Current record: %lld\n, Current distance: %lld\n, Minimum distance: %lld\n, Record name: %s",current_record, current_distance, min_distance, data->rs[closest_record].name);
-
-    if (current_distance < min_distance) {
+    if (current_distance < min_distance && current_distance != 0) {
       closest_record = current_record;
       min_distance = current_distance;
       result_record = &data->rs[closest_record];
