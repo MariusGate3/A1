@@ -94,7 +94,8 @@ struct node* search_kd_tree(struct node *root, size_t depth, struct node *closes
         closest_dist = distToTarget;
     }
 
-    struct node *nextNode, *otherNode;
+    struct node *nextNode;
+    struct node *otherNode;
     double r_prime;
 
     if (depth % 2 == 0) {
@@ -116,19 +117,12 @@ struct node* search_kd_tree(struct node *root, size_t depth, struct node *closes
         }
         r_prime = fabs(targetLat - root->lat);
     }
-    struct node *temp = search_kd_tree(nextNode, depth + 1, closest, closest_dist, targetLon, targetLat);
-    double tempDist = eucldist(temp->lon, temp->lat, targetLon, targetLat);
-
-    if (tempDist < distToTarget) {
-        closest = temp;
-    } else {
-        closest = root;
-    }
+    closest = search_kd_tree(nextNode, depth + 1, closest, closest_dist, targetLon, targetLat);
     closest_dist = eucldist(closest->lon, closest->lat, targetLon, targetLat);
 
-    if (closest_dist >= r_prime*r_prime) {
-        temp = search_kd_tree(otherNode, depth + 1, closest, closest_dist, targetLon, targetLat);
-        tempDist = eucldist(temp->lon, temp->lat, targetLon, targetLat);
+    if (closest_dist > r_prime) {
+        struct node *temp = search_kd_tree(otherNode, depth + 1, closest, closest_dist, targetLon, targetLat);
+        double tempDist = eucldist(temp->lon, temp->lat, targetLon, targetLat);
 
         if (tempDist < closest_dist) {
             closest = temp;
