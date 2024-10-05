@@ -26,11 +26,12 @@ void free_naive(struct naive_data* data) {
 }
 
 const struct record* lookup_naive(struct naive_data *data, int64_t needle) {
-  int64_t current_record = 0;
-
+  size_t current_record = 0;
+  size_t rs_len = data->n;
+  
   while (data->rs[current_record].osm_id != needle)
   {
-    if (current_record > data->n) {
+    if (current_record > rs_len) {
       return NULL;
     }
     current_record++;
