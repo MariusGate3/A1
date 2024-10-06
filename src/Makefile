@@ -34,6 +34,7 @@ test: $(TESTS)
 
 clean:
 	rm -rf core *.o $(PROGRAMS)
+	rm -rf ./test_files
 
 planet-latest-geonames.tsv:
 	wget https://github.com/OSMNames/OSMNames/releases/download/v2.0.4/planet-latest_geonames.tsv.gz
